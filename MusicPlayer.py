@@ -1,11 +1,15 @@
 import os
+from pydub import AudioSegment
+from pydub.playback import play
 
 musicList = []
 musicDirectory = './Music/'
 
+#musicDirectory + musicList[choice]
 
-def play(choice):
-    os.system(musicDirectory + musicList[choice])
+def playMusic(choice):
+    sound = AudioSegment.from_mp3(musicDirectory + musicList[choice])
+    play(sound)
 
 
 def creatFolder(directory):
@@ -26,4 +30,4 @@ def checkMusic():
 creatFolder(musicDirectory)
 checkMusic()
 print(musicList)
-play(0)
+playMusic(0)
