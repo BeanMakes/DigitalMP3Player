@@ -38,5 +38,3 @@ def isMusicRunning():
 
 creatFolder(musicDirectory)
 checkMusic()
-print(musicList)
-playMusic(0)
