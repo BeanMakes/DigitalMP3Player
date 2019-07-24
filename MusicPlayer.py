@@ -1,16 +1,18 @@
 import os
-from pydub import AudioSegment
-from pydub.playback import play
+import simpleaudio as sa
+
 
 musicList = []
 musicDirectory = './Music/'
-
-#musicDirectory + musicList[choice]
+wav_obj = object
+musicIsPlaying = False
 
 
 def playMusic(choice):
-    sound = AudioSegment.from_mp3(musicDirectory + musicList[choice])
-    play(sound)
+    wav_obj = sa.WaveObject.from_wave_file(musicDirectory + musicList[choice])
+    play_obj = wav_obj.play()
+    musicPlaying = play_obj.is_playing()
+    play_obj.wait_done()
 
 
 def creatFolder(directory):
@@ -24,10 +26,15 @@ def creatFolder(directory):
 def checkMusic():
     for r, d, f in os.walk(musicDirectory):
         for file in f:
-            if file.endswith('.mp3'):
+            if file.endswith('.wav'):
                 musicList.append(file)
 
-    musicList = [file for r, d, f in os.walk(musicDirectory) for file in f if file.endswith('.mp3')]
+    #musicList = [file for r, d, f in os.walk(musicDirectory) for file in f if file.endswith('.mp3')]
+
+
+def isMusicRunning():
+    return musicIsPlaying
+
 
 creatFolder(musicDirectory)
 checkMusic()
