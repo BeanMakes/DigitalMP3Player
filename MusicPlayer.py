@@ -1,12 +1,11 @@
 import os
-from playsound import playsound
 
 musicList = []
 musicDirectory = './Music/'
 
 
 def play(choice):
-    playsound(musicDirectory + musicList[choice])
+    os.system(musicDirectory + musicList[choice])
 
 
 def creatFolder(directory):
