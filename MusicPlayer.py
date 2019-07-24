@@ -7,6 +7,7 @@ musicDirectory = './Music/'
 
 #musicDirectory + musicList[choice]
 
+
 def playMusic(choice):
     sound = AudioSegment.from_mp3(musicDirectory + musicList[choice])
     play(sound)
@@ -26,6 +27,7 @@ def checkMusic():
             if file.endswith('.mp3'):
                 musicList.append(file)
 
+    musicList = [file for r, d, f in os.walk(musicDirectory) for file in f if file.endswith('.mp3')]
 
 creatFolder(musicDirectory)
 checkMusic()
