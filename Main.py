@@ -18,12 +18,13 @@ class mainWindow(wx.Frame):
         buttonS = wx.Button(panel, wx.ID_ANY, 'Stop', (10, 50))
         buttonS.Bind(wx.EVT_BUTTON, onStopButton)
 
+        buttonN = wx.Button(panel, wx.ID_ANY, 'Next', (100, 10))
+        buttonN.Bind(wx.EVT_BUTTON, onNextButton)
+
         self.Show()
 
 
 def onPlayButton(event):
-    mp.checkMusic()
-    mp.setChoice = 0
     mp.playMusic()
 
 
@@ -31,6 +32,11 @@ def onStopButton(event):
     mp.stopMusic()
 
 
+def onNextButton(event):
+    mp.nextMusic()
+
+
+mp.checkMusic()
 app = wx.App(False)
 frame = mainWindow(None, "Music Player")
 

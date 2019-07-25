@@ -1,5 +1,6 @@
 import os
 import simpleaudio as sa
+import time
 
 
 class MusicPlayer:
@@ -16,11 +17,21 @@ class MusicPlayer:
 
     def stopMusic(self):
         sa.stop_all()
+        print(self.__musicChoice)
 
     def nextMusic(self):
         sa.stop_all()
-        self.__wav_obj = sa.WaveObject.from_wave_file(self.__musicDirectory + self.__musicList[musicChoice+1])
-        play_obj = wav_obj.play()
+        self.__musicChoice = self.__musicChoice +1
+        self.__wav_obj = sa.WaveObject.from_wave_file(self.__musicDirectory + self.__musicList[self.__musicChoice])
+        play_obj = self.__wav_obj.play()
+
+    def preMusic(self):
+        if self.__musicChoice == 0:
+            self.__musicChoice = 0
+        else:
+            self.__musicChoice = self.__musicChoice - 1
+            self.__wav_obj = sa.WaveObject.from_wave_file(self.__musicDirectory + self.__musicList[self.__musicChoice])
+            play_obj = self.__wav_obj.play()
 
     def checkMusic(self):
         for r, d, f in os.walk(self.__musicDirectory):
@@ -30,7 +41,6 @@ class MusicPlayer:
 
     def setChoice(self, choice):
         self.__musicChoice = choice
-
 
     def getChoice(self):
         return self.__musicChoice
