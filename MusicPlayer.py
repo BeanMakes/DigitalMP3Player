@@ -3,8 +3,10 @@ from pydub import AudioSegment
 import os
 import simpleaudio as sa
 
-
+#Class for the Music Player
 class MusicPlayer:
+
+    #Intialising variables for the class
     def __init__(self):
         self.__musicList = []
         self.__musicDirectory = './Music/'
@@ -36,19 +38,23 @@ class MusicPlayer:
             play_obj = self.__wav_obj.play()
 
     def checkMusic(self):
+        #Checks if there are any .mp3 files
         for r, d, f in os.walk(self.__musicDirectory):
             for file in f:
                 if file.endswith('.mp3'):
                     wav_audio = AudioSegment.from_file(self.__musicDirectory+file, format="wav")
                     wav_audio.export(self.__musicDirectory+file.replace('.mp3', '') + ".wav", format="wav")
+                    #Exports them to become .wav files
         for r, d, f in os.walk(self.__musicDirectory):
             for file in f:
                 if file.endswith('.wav'):
                     self.__musicList.append(file)
+                    #Stores list of music into the list
         for r, d, f in os.walk(self.__musicDirectory):
             for file in f:
                 if not file.endswith('.wav'):
                     os.remove(self.__musicDirectory+file)
+                    #Detects and deletes any files that are not .wav files
 
     def setChoice(self, choice):
         self.__musicChoice = choice
