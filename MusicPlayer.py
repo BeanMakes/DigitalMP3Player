@@ -2,12 +2,16 @@ from pydub import AudioSegment
 
 import os
 import simpleaudio as sa
+import wave
+import time
+import threading
 
 #Class for the Music Player
 class MusicPlayer:
 
     #Intialising variables for the class
     def __init__(self):
+        self.__time = time.time()
         self.__musicList = []
         self.__musicDirectory = './Music/'
         self.__wav_obj = object
@@ -17,6 +21,11 @@ class MusicPlayer:
         sa.stop_all()
         self.__wav_obj = sa.WaveObject.from_wave_file(self.__musicDirectory + self.__musicList[self.__musicChoice])
         play_obj = self.__wav_obj.play()
+
+        waveFile = wave.open(self.__musicDirectory + self.__musicList[self.__musicChoice])
+        print(waveFile.getnframes())
+        #threading.Thread(target=stopwatch(waveFile.getnframes()/44234)).start() #Song length (by time) calculation
+        waveFile.close()
 
     def stopMusic(self):
         sa.stop_all()
@@ -66,6 +75,15 @@ class MusicPlayer:
         return self.__musicList
 
     musicChoice = property(getChoice,setChoice)
+
+def stopwatch(seconds):
+    start = time.time()
+    time.clock()
+    elapsed = 0
+    while elapsed < seconds:
+        elapsed = time.time() - start
+        print("loop cycle time: %f, seconds count: %02d" % (time.clock(), elapsed))
+        time.sleep(1)
 
 
     #musicList = [file for r, d, f in os.walk(musicDirectory) for file in f if file.endswith('.mp3')]

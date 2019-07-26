@@ -1,5 +1,7 @@
 from MusicPlayer import MusicPlayer
 import wx
+import threading
+import time
 
 mp = MusicPlayer()
 
@@ -56,6 +58,13 @@ class mainWindow(wx.Frame):
         self.Show()
 
 
+def loop1_10():
+    for i in range(1, 11):
+        time.sleep(1)
+        print(i)
+
+
+threading.Thread(target=loop1_10).start()
 
 
 
