@@ -12,6 +12,31 @@ class mainWindow(wx.Frame):
 
         panel = wx.Panel(self, wx.ID_ANY)
 
+        # Creating listbox for GUI
+        def listBox(self):
+            self.text = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
+            listBox = wx.ListBox(panel, pos=(40, 10), size=(200, 70), choices=mp.getMusicList(), style=wx.LB_SINGLE)
+            listBox.SetScrollPos(wx.HORIZONTAL, listBox.GetScrollRange(wx.HORIZONTAL), refresh=True)
+            listBox.SetSelection(0)
+            return listBox
+
+        musicBox = listBox(self)
+
+        def onPlayButton(event):
+            mp.setChoice(musicBox.GetSelection())
+            mp.playMusic()
+
+        def onStopButton(event):
+            mp.stopMusic()
+
+        def onNextButton(event):
+            mp.nextMusic()
+            musicBox.SetSelection(mp.getChoice())
+
+        def onPrevButton(event):
+            mp.preMusic()
+            musicBox.SetSelection(mp.getChoice())
+
         #Button for play
         button = wx.Button(panel, wx.ID_ANY, 'Play', (100, 100))
         button.Bind(wx.EVT_BUTTON, onPlayButton)
@@ -28,32 +53,13 @@ class mainWindow(wx.Frame):
         buttonP = wx.Button(panel, wx.ID_ANY, 'Previous', (10, 100))
         buttonP.Bind(wx.EVT_BUTTON, onPrevButton)
 
-        #Creating listbox for GUI
-        self.text = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
-        listBox = wx.ListBox(panel, pos = (40,10), size = (200,70), choices = mp.getMusicList(),style = wx.LB_SINGLE)
-        listBox.SetScrollPos(wx.HORIZONTAL, listBox.GetScrollRange(wx.HORIZONTAL), refresh=True)
-
         self.Show()
 
 
-def onPlayButton(event):
-    mp.playMusic()
 
 
-def onStopButton(event):
-    mp.stopMusic()
-
-
-def onNextButton(event):
-    mp.nextMusic()
-
-
-def onPrevButton(event):
-    mp.preMusic()
 
 mp.checkMusic()
 app = wx.App(False)
 frame = mainWindow(None, "Music Player")
-
-
 app.MainLoop()
