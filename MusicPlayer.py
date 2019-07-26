@@ -62,8 +62,10 @@ class MusicPlayer:
     def getChoice(self):
         return self.__musicChoice
 
-    musicChoice = property(getChoice,setChoice)
+    def getMusicList(self):
+        return self.__musicList
 
+    musicChoice = property(getChoice,setChoice)
 
 
     #musicList = [file for r, d, f in os.walk(musicDirectory) for file in f if file.endswith('.mp3')]
