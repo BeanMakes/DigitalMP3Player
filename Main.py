@@ -1,7 +1,7 @@
 from MusicPlayer import MusicPlayer
 import wx
-import threading
 import time
+from CounterTimer import SecondCounter
 
 mp = MusicPlayer()
 
@@ -11,6 +11,8 @@ class mainWindow(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(280, -1))
         self.CreateStatusBar()  # A Statusbar in the bottom of the window
+        count = SecondCounter()
+        count.start()
 
         panel = wx.Panel(self, wx.ID_ANY)
 
@@ -30,6 +32,7 @@ class mainWindow(wx.Frame):
 
         def onStopButton(event):
             mp.stopMusic()
+            print(count.finish())
 
         def onNextButton(event):
             mp.nextMusic()
@@ -64,9 +67,7 @@ def loop1_10():
         print(i)
 
 
-threading.Thread(target=loop1_10).start()
-
-
+#threading.Thread(target=loop1_10).start()
 
 mp.checkMusic()
 app = wx.App(False)
