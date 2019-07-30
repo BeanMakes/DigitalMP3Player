@@ -1,17 +1,12 @@
-from MusicPlayer import MusicPlayer
 import wx
-import time
-from CounterTimer import SecondCounter
-
-mp = MusicPlayer()
-
+from CounterTimer import BackgroundTimer
 
 class mainWindow(wx.Frame):
 
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(280, -1))
         self.CreateStatusBar()  # A Statusbar in the bottom of the window
-        count = SecondCounter()
+        count = BackgroundTimer()
         count.start()
 
         panel = wx.Panel(self, wx.ID_ANY)
@@ -19,7 +14,7 @@ class mainWindow(wx.Frame):
         # Creating listbox for GUI
         def listBox(self):
             self.text = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
-            listBox = wx.ListBox(panel, pos=(40, 10), size=(200, 70), choices=mp.getMusicList(), style=wx.LB_SINGLE)
+            listBox = wx.ListBox(panel, pos=(40, 10), size=(200, 70), choices=count.getMusicList(), style=wx.LB_SINGLE)
             listBox.SetScrollPos(wx.HORIZONTAL, listBox.GetScrollRange(wx.HORIZONTAL), refresh=True)
             listBox.SetSelection(0)
             return listBox
@@ -27,20 +22,20 @@ class mainWindow(wx.Frame):
         musicBox = listBox(self)
 
         def onPlayButton(event):
-            mp.setChoice(musicBox.GetSelection())
-            mp.playMusic()
+            count.setChoice(musicBox.GetSelection())
+            count.playMusic()
+            print(count.peek())
 
         def onStopButton(event):
-            mp.stopMusic()
-            print(count.finish())
+            count.stopMusic()
 
         def onNextButton(event):
-            mp.nextMusic()
-            musicBox.SetSelection(mp.getChoice())
+            count.nextMusic()
+            musicBox.SetSelection(count.getChoice())
 
         def onPrevButton(event):
-            mp.preMusic()
-            musicBox.SetSelection(mp.getChoice())
+            count.preMusic()
+            musicBox.SetSelection(count.getChoice())
 
         #Button for play
         button = wx.Button(panel, wx.ID_ANY, 'Play', (100, 100))
@@ -61,15 +56,6 @@ class mainWindow(wx.Frame):
         self.Show()
 
 
-def loop1_10():
-    for i in range(1, 11):
-        time.sleep(1)
-        print(i)
-
-
-#threading.Thread(target=loop1_10).start()
-
-mp.checkMusic()
 app = wx.App(False)
 frame = mainWindow(None, "Music Player")
 app.MainLoop()

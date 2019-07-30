@@ -13,7 +13,7 @@ class MusicPlayer:
         self.__time = time.time()
         self.__musicList = []
         self.__musicDirectory = './Music/'
-        self.__wav_obj = object
+        self.__wav_obj = sa.WaveObject
         self.__musicChoice = 0
         self.__size = 0
 
@@ -23,13 +23,11 @@ class MusicPlayer:
         play_obj = self.__wav_obj.play()
 
         waveFile = wave.open(self.__musicDirectory + self.__musicList[self.__musicChoice])
-        print(waveFile.getnframes())
         self.__size = waveFile.getnframes()
         waveFile.close()
 
     def stopMusic(self):
         sa.stop_all()
-        print(self.__musicChoice)
 
     def nextMusic(self):
         sa.stop_all()
@@ -71,12 +69,17 @@ class MusicPlayer:
     def getChoice(self):
         return self.__musicChoice
 
+    def setMusicList(self, musicList):
+        self.__musicList = musicList
+
     def getMusicList(self):
-
-
         return self.__musicList
+
+    def setSize(self, size):
+        self.__size = size
 
     def getSize(self):
         return self.__size
 
-    musicChoice = property(getChoice,setChoice)
+    def getPlayObj(self):
+        return self.__wav_obj.play()
