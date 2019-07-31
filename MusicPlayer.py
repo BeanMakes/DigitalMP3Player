@@ -5,10 +5,10 @@ import simpleaudio as sa
 import wave
 import time
 
-#Class for the Music Player
+# Class for the Music Player
 class MusicPlayer:
 
-    #Intialising variables for the class
+    # Intialising variables for the class
     def __init__(self):
         self.__time = time.time()
         self.__musicList = []
@@ -45,23 +45,23 @@ class MusicPlayer:
             play_obj = self.__wav_obj.play()
 
     def checkMusic(self):
-        #Checks if there are any .mp3 files
+        # Checks if there are any .mp3 files
         for r, d, f in os.walk(self.__musicDirectory):
             for file in f:
                 if file.endswith('.mp3'):
                     wav_audio = AudioSegment.from_file(self.__musicDirectory+file, format="wav")
                     wav_audio.export(self.__musicDirectory+file.replace('.mp3', '') + ".wav", format="wav")
-                    #Exports them to become .wav files
+                    # Exports them to become .wav files
         for r, d, f in os.walk(self.__musicDirectory):
             for file in f:
                 if file.endswith('.wav'):
                     self.__musicList.append(file)
-                    #Stores list of music into the list
+                    # Stores list of music into the list
         for r, d, f in os.walk(self.__musicDirectory):
             for file in f:
                 if not file.endswith('.wav'):
                     os.remove(self.__musicDirectory+file)
-                    #Detects and deletes any files that are not .wav files
+                    # Detects and deletes any files that are not .wav files
 
     def setChoice(self, choice):
         self.__musicChoice = choice
