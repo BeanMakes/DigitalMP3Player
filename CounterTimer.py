@@ -27,7 +27,7 @@ class BackgroundTimer(threading.Thread):
             time.sleep(self.__interval)
             # update count value
             self.__value += self.__interval
-            print(self.__value)
+            # print(self.__value)
             if self.__endOfSong != 0:
                 # When song is finished play next song
                 if self.__endOfSong <= self.__value:
@@ -74,4 +74,7 @@ class BackgroundTimer(threading.Thread):
 
     def getMusicList(self):
         return mp.getMusicList()
+    
+    def getSongLength(self):
+        return (int)(mp.getTotalTimeSong()[-1])
 

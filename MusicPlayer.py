@@ -4,6 +4,10 @@ import os
 import simpleaudio as sa
 import wave
 import time
+import numpy as np
+from scipy.io import wavfile
+
+import matplotlib.pyplot as plt
 
 # Class for the Music Player
 class MusicPlayer:
@@ -16,10 +20,12 @@ class MusicPlayer:
         self.__wav_obj = sa.WaveObject
         self.__musicChoice = 0
         self.__size = 0
+        
 
     def playMusic(self):
         sa.stop_all()
         self.__wav_obj = sa.WaveObject.from_wave_file(self.__musicDirectory + self.__musicList[self.__musicChoice])
+        self.__sampleRate, self.__audioData = wavfile.read(self.__musicDirectory + self.__musicList[self.__musicChoice])
         play_obj = self.__wav_obj.play()
 
         waveFile = wave.open(self.__musicDirectory + self.__musicList[self.__musicChoice])
@@ -83,3 +89,14 @@ class MusicPlayer:
 
     def getPlayObj(self):
         return self.__wav_obj.play()
+    
+    def getTotalTimeSong(self):
+        return np.arange(len(self.__audioData)) / self.__sampleRate
+    
+    def plotGraph(self):
+        plt.figure(figsize=(10, 4))
+        plt.plot(np.arange(len(self.__audioData)) / self.__sampleRate, self.__audioData)
+        plt.xlabel('Time (s)')
+        plt.ylabel('Amplitude')
+        plt.title('Audio Waveform')
+        plt.show()
