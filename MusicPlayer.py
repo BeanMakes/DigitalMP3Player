@@ -93,6 +93,9 @@ class MusicPlayer:
     def getTotalTimeSong(self):
         return np.arange(len(self.__audioData)) / self.__sampleRate
     
+    def getMusicName(self):
+        return self.__musicList[self.__musicChoice]
+    
     def plotGraph(self):
         plt.figure(figsize=(10, 4))
         plt.plot(np.arange(len(self.__audioData)) / self.__sampleRate, self.__audioData)

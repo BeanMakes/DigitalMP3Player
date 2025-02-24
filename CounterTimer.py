@@ -77,4 +77,7 @@ class BackgroundTimer(threading.Thread):
     
     def getSongLength(self):
         return (int)(mp.getTotalTimeSong()[-1])
+    
+    def getMusicName(self):
+        return mp.getMusicName()
 
